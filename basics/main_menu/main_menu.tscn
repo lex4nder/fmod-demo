@@ -1,0 +1,132 @@
+[gd_scene load_steps=3 format=3 uid="uid://bc0mm23ax6ho1"]
+
+[ext_resource type="Script" uid="uid://ck3hb4mtc6lxe" path="res://basics/main_menu/main_menu.gd" id="1_0qt1c"]
+[ext_resource type="Texture2D" uid="uid://bugdl52fjcv3o" path="res://graphics/icon.svg" id="2_0qt1c"]
+
+[node name="Root" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0qt1c")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.137255, 0.121569, 0.160784, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/CenterContainer"]
+layout_mode = 2
+
+[node name="PlayAmbience" type="Button" parent="ColorRect/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Play Ambience"
+
+[node name="NoiseAmountLabel" type="RichTextLabel" parent="ColorRect/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "noise amount"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="NoiseAmountSlider" type="HSlider" parent="ColorRect/CenterContainer/VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+
+[node name="HSeparator" type="HSeparator" parent="ColorRect/CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="PlayMusic1" type="Button" parent="ColorRect/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Play Music #1"
+
+[node name="PlayMusic2" type="Button" parent="ColorRect/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Play Music #2"
+
+[node name="HSeparator2" type="HSeparator" parent="ColorRect/CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MusVolLabel" type="RichTextLabel" parent="ColorRect/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "mus level"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="MusVolSlider" type="HSlider" parent="ColorRect/CenterContainer/VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 0.8
+
+[node name="AmbVolLabel" type="RichTextLabel" parent="ColorRect/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "amb level"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="AmbVolSlider" type="HSlider" parent="ColorRect/CenterContainer/VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 0.8
+
+[node name="SFXVolLabel" type="RichTextLabel" parent="ColorRect/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "sfx level"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="SFXVolSlider" type="HSlider" parent="ColorRect/CenterContainer/VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 0.8
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0954861
+anchor_top = 0.162037
+anchor_right = 0.250563
+anchor_bottom = 0.437877
+offset_right = 0.35199
+offset_bottom = 0.255997
+texture = ExtResource("2_0qt1c")
+metadata/_edit_use_anchors_ = true
+
+[node name="FmodBankLoader" type="FmodBankLoader" parent="."]
+bank_paths = ["res://audio/banks/Master.strings.bank", "res://audio/banks/Master.bank"]
+
+[node name="MusicEmitter" type="FmodEventEmitter2D" parent="."]
+event_guid = "{86c9e1df-7774-031c-2034-2c4cf468ec77}"
+
+[node name="AmbienceEmitter" type="FmodEventEmitter3D" parent="."]
+event_name = "event:/amb/amb_bigfan"
+event_guid = "{a3898e71-be4f-4ea0-83e7-399737efe6c2}"
+fmod_parameters/noise_amount/id = -2111135175092820177
+fmod_parameters/noise_amount = 0.0
+fmod_parameters/noise_amount/variant_type = 3
+
+[connection signal="pressed" from="ColorRect/CenterContainer/VBoxContainer/PlayAmbience" to="." method="_on_play_ambience_pressed"]
+[connection signal="value_changed" from="ColorRect/CenterContainer/VBoxContainer/NoiseAmountSlider" to="." method="_on_noise_amount_slider_value_changed"]
+[connection signal="pressed" from="ColorRect/CenterContainer/VBoxContainer/PlayMusic1" to="." method="_on_play_music_1_pressed"]
+[connection signal="pressed" from="ColorRect/CenterContainer/VBoxContainer/PlayMusic2" to="." method="_on_play_music_2_pressed"]
+[connection signal="value_changed" from="ColorRect/CenterContainer/VBoxContainer/MusVolSlider" to="." method="_on_mus_vol_slider_value_changed"]
+[connection signal="value_changed" from="ColorRect/CenterContainer/VBoxContainer/AmbVolSlider" to="." method="_on_amb_vol_slider_value_changed"]
+[connection signal="value_changed" from="ColorRect/CenterContainer/VBoxContainer/SFXVolSlider" to="." method="_on_sfx_vol_slider_value_changed"]
+[connection signal="mouse_entered" from="TextureRect" to="." method="_on_texture_rect_mouse_entered"]
