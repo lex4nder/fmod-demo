@@ -60,9 +60,11 @@ func _play_music(music_name):
 		$MusicEmitter.set_event_name(music_name)
 		$MusicEmitter.play()
 		mus_playing = true
+	
 	elif not mus_playing:
 		$MusicEmitter.play()
 		mus_playing = true
+	
 	else:
 		$MusicEmitter.stop()
 		mus_playing = false
@@ -75,6 +77,7 @@ func _on_play_ambience_pressed() -> void:
 	if not amb_playing:
 		$AmbienceEmitter.play()
 		amb_playing = true
+	
 	else:
 		$AmbienceEmitter.stop()
 		amb_playing = false
@@ -83,7 +86,6 @@ func _on_play_ambience_pressed() -> void:
 func _on_noise_amount_slider_value_changed(value: float) -> void:
 	"""Наверное, одна из ключевых фич фмода -- параметры"""
 	$AmbienceEmitter.set_parameter('noise_amount', value)
-
 
 
 # Ну и просто слайдеры
