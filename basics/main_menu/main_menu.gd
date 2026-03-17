@@ -10,18 +10,18 @@ var amb_playing = false
 
 
 func _ready() -> void:
-	print(FmodServer.get_all_vca())
+	
+	"""VCA -- это типа мастер-шины, их удобно для настроек громкости юзать"""
+	"""в реальной жизни тут наверное надо подтянуть настройки громкости из сейва"""
+	
 	var sfx_vca = FmodServer.get_vca('vca:/SFX')  # не знаю, зачем я тут эти переменные создал, но оставлю :D
-												 # я и так по итогу почти всё с нуля делал хд
-	sfx_vca.volume = mus_volume
+	sfx_vca.volume = mus_volume					 # я и так по итогу почти всё с нуля переделал!
 	
 	var music_vca = FmodServer.get_vca('vca:/Music')
 	music_vca.volume = sfx_volume
 	
 	var amb_vca = FmodServer.get_vca('vca:/Ambience')
 	amb_vca.volume = amb_volume
-	
-	print($AmbienceEmitter.is_paused())
 
 
 func _on_texture_rect_mouse_entered() -> void:
@@ -30,15 +30,6 @@ func _on_texture_rect_mouse_entered() -> void:
 	$TextureRect.offset_left = randf_range(0., 50.)
 	
 	_play_sfx('event:/SFX/snd_explosion')
-	#print(FmodServer.get_all_vca()
-
-
-func _on_play_music_1_pressed() -> void:
-	_play_music('event:/mus/mus_pieceofkinight')
-
-
-func _on_play_music_2_pressed() -> void:
-	_play_music('event:/mus/mus_puzzle')
 
 
 func _play_sfx(sfx_name):
@@ -47,9 +38,16 @@ func _play_sfx(sfx_name):
 	"""годошных audiostreamplayer и шин"""
 	
 	var sfx = FmodEventEmitter3D.new()  # да, там ошибка, но оно работает, я щас точно с этим не буду разбираться(
-									   # не знаю, как по-умному добавлять новые ноды)
-	sfx.set_event_name(sfx_name)
+	sfx.set_event_name(sfx_name)		   # не знаю, как по-умному добавлять новые ноды)
 	sfx.play()
+
+
+func _on_play_music_1_pressed() -> void:
+	_play_music('event:/mus/mus_pieceofkinight')
+
+
+func _on_play_music_2_pressed() -> void:
+	_play_music('event:/mus/mus_puzzle')
 
 
 func _play_music(music_name):
@@ -80,12 +78,15 @@ func _on_play_ambience_pressed() -> void:
 	else:
 		$AmbienceEmitter.stop()
 		amb_playing = false
-	
 
 
 func _on_noise_amount_slider_value_changed(value: float) -> void:
+	"""Наверное, одна из ключевых фич фмода -- параметры"""
 	$AmbienceEmitter.set_parameter('noise_amount', value)
 
+
+
+# Ну и просто слайдеры
 
 func _on_mus_vol_slider_value_changed(value: float) -> void:
 	FmodServer.get_vca('vca:/Music').volume = value
